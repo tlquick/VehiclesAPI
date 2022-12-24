@@ -15,3 +15,4 @@ module.exports.getQuery = async (queryString) => {
     return results
 }
 
+
