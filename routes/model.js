@@ -1,16 +1,21 @@
 const express = require('express')
-const display = require('./_displayResults')
 const router = express.Router()
+const models = require("../controllers/model.js")
 
-const select = `SELECT model_id, model_name FROM "Model"`
 
+// get all Models
+router.get('/', models.findAll)
 
-router.get('/', async (req, res) =>{
-    await display.getResults(select, res)
-})
+// Create a new Model
+router.post('/', models.create)
 
-router.get('/:id', async (req, res) =>{
-    const where = `WHERE "Model".model_id = ` + req.params.id
-    await display.getResults(select + where, res)
-})
+//find a specific Model
+router.get('/:id',  models.findOne)
+
+// Update a Model with id
+router.put('/:id', models.update)
+
+// Delete a Model with id
+router.delete('/:id', models.delete)
+
 module.exports = router

@@ -1,18 +1,20 @@
 const express = require('express')
-const display = require('./_displayResults')
 const router = express.Router()
+const vehicles = require("../controllers/vehicle.js")
 
-const select = `SELECT "Vehicle".vehicle_id,"Make".make_name,"Model".model_name FROM "Vehicle", "Make", "Model"`
-const where = `WHERE "Vehicle".make_id = "Make".make_id AND "Vehicle".model_id = "Model".model_id ` 
+// get all Vehicles
+router.get('/', vehicles.findAll)
 
+// Create a new Vehicles
+router.post('/', vehicles.create)
 
-router.get('/', async (req, res) =>{
-    await display.getResults(select + where, res)
-})
+//find a specific Vehicles
+router.get('/:id',  vehicles.findOne)
 
-router.get('/:id', async (req, res) =>{
-    const andId = `AND "Vehicle".vehicle_id = ` + req.params.id
-    await display.getResults(select + where + andId, res)
-})
+// Update a Vehicles with id
+router.put('/:id', vehicles.update)
+
+// Delete a Vehicles with id
+router.delete('/:id', vehicles.delete)
 
 module.exports = router

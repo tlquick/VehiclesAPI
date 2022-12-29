@@ -1,16 +1,22 @@
 const express = require('express')
-const display = require('./_displayResults')
 const router = express.Router()
+const colours = require("../controllers/colour.js")
 
-const select = `SELECT colour_id, colour_name FROM "Colour"`
 
+// get all Colours
+router.get('/', colours.findAll)
 
-router.get('/', async (req, res) =>{
-    await display.getResults(select, res)
-})
-router.get('/:id', async (req, res) =>{
-    const where = `WHERE "Colour".colour_id = ` + req.params.id
-    await display.getResults(select + where, res)
-})
+// Create a new Colour
+router.post('/', colours.create)
+
+//find a specific Colour
+router.get('/:id',  colours.findOne)
+
+// Update a Colour with id
+router.put('/:id', colours.update)
+
+// Delete a Colour with id
+router.delete('/:id', colours.delete)
+
 
 module.exports = router

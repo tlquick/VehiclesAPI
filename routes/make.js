@@ -1,17 +1,21 @@
 const express = require('express')
-const display = require('./_displayResults')
 const router = express.Router()
 
-const select = `SELECT make_id, make_name FROM "Make"`
+const makes = require("../controllers/make.js")
 
+// get all Makes
+router.get('/', makes.findAll)
 
-router.get('/', async (req, res) =>{    
-     await display.getResults(select, res)
-})
+// Create a new Make
+router.post('/', makes.create)
 
-router.get('/:id', async (req, res) =>{
-    const where = `WHERE "Make".make_id = ` + req.params.id
-    await display.getResults(select + where, res)
-})
+//find a specific Make
+router.get('/:id', makes.findOne)
+
+// Update a Make with id
+router.put('/:id', makes.update)
+
+// Delete a Make with id
+router.delete('/:id', makes.delete)
 
 module.exports = router

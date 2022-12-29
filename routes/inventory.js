@@ -1,20 +1,22 @@
 const express = require('express')
-const display = require('./_displayResults')
 const router = express.Router()
+const inventory = require("../controllers/inventory.js")
+ 
 
-const select = `SELECT "Inventory".inventory_id,"Vehicle".vehicle_id,"Make".make_name,
-        "Model".model_name,"Colour".colour_name FROM "Inventory", "Vehicle", "Make", "Model", "Colour" `
-const where = `WHERE "Inventory".vehicle_id = "Vehicle".vehicle_id AND "Vehicle".make_id = "Make".make_id 
-        AND "Vehicle".model_id = "Model".model_id AND "Inventory".colour_id = "Colour".colour_id ` 
+// get all Inventory
+router.get('/', inventory.findAll)
 
-router.get('/', async (req, res) =>{
-    await display.getResults(select + where, res)
-})
-    
-router.get('/:id', async (req, res) =>{
+// Create a new Inventory
+router.post('/', inventory.create)
 
-    const andId = `AND "Inventory".inventory_id = ` + req.params.id
-    await display.getResults(select + where + andId, res)
-})
+//find a specific Inventory
+router.get('/:id',  inventory.findOne)
+
+// Update a Inventory with id
+router.put('/:id', inventory.update)
+
+// Delete a Inventory with id
+router.delete('/:id', inventory.delete)
+
 
 module.exports = router
