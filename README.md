@@ -6,4 +6,5 @@ Uses:
 <ul>
 <li>Jest to test basic endpoints </li>
 <li>SQL then Sequelize to connect to PostgreSQL </li>
-</ul>
+</ul> <br>
+**Code was written without semi colons, just using ASI
